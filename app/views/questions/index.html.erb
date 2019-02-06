@@ -1,1 +1,88 @@
-<%= link_to 'Ask question', new_question_path %>
+<div class="row">
+  <div class="col-4">
+    <h2>
+      Главные вопросы
+    </h2>
+  </div>
+  <div class="col-8">
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+        <%= link_to 'Ask question', new_question_path, class: "nav-link active btn btn-primary" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-12">
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+        <%= link_to 'Интересные', '', class: "nav-link active" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Рекомендуемые', '', class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Горячие', '', class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Неделя', '', class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Месяц', '', class: "nav-link disabled" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<hr>
+<% @questions.each do |question| %>
+  <div class="row">
+    <div class="col-4">
+      <nav aria-label="...">
+        <ul class="pagination pagination-lg">
+          <li class="page-item">
+            <%= link_to question_path(question), class: "page-link", style: "font-size: 10px; text-align: center;" do %>
+              <span>1</span>
+              <br>
+              <span>votes</span>
+            <% end %>
+          </li>
+          <li class="page-item">
+            <%= link_to question_path(question), class: "page-link", style: "font-size: 10px; text-align: center;" do %>
+              <span>1</span>
+              <br>
+              <span>answer</span>
+            <% end %>
+          </li>
+          <li class="page-item">
+            <%= link_to question_path(question), class: "page-link", style: "font-size: 10px; text-align: center;" do %>
+              <span>1</span>
+              <br>
+              <span>views</span>
+            <% end %>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-8">
+      <div class="row">
+        <div class="col-12">
+          <%= link_to question.title, question_path(question) %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-7">
+          <%= link_to 'tag', '', class: "badge badge-light" %>
+          <%= link_to 'tag', '', class: "badge badge-light" %>
+          <%= link_to 'tag', '', class: "badge badge-light" %>
+          <%= link_to 'tag', '', class: "badge badge-light" %>
+          <%= link_to 'tag', '', class: "badge badge-light" %>
+          <%= link_to 'tag', '', class: "badge badge-light" %>
+        </div>
+        <div class="col-5">
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+<% end %>
