@@ -1,0 +1,23 @@
+<%= form_with(model: @question, local: true) do |form| %>
+  <div class="row">
+    <div class="col-12">
+      <%= form.label :title %>
+      <div>
+        <%= form.text_field :title, maxlength: 80 %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <%= form.label :body %>
+      <div>
+        <%= form.text_area :body, cols: 83, rows: 10 %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <%= form.submit %>
+    </div>
+  </div>
+<% end %>
