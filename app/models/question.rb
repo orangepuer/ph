@@ -1,7 +1,8 @@
 class Question < ApplicationRecord
-  validates :title, :body, presence: true
-
   belongs_to :user
+  has_many :answers
+
+  validates :title, :body, presence: true
 
   def created_before
     @numbers_of_day = (Time.now - self.created_at).to_f/60/60/24
