@@ -1,11 +1,16 @@
 <div class="row">
   <div class="col-12">
-    <%= @question.title %>
+    <b>
+      <%= @question.title %>
+    </b>
   </div>
 </div>
+<hr>
 <div class="row">
   <div class="col-12">
-    <%= @question.body %>
+    <p>
+      <%= @question.body %>
+    </p>
   </div>
 </div>
 <div class="row">
@@ -18,3 +23,30 @@
     <%= link_to 'Delete', @question, method: :delete, data: { confirm: 'Are you sure?' } if @question.user == current_user %>
   </div>
 </div>
+<hr>
+<div class="answers">
+  <% @question.answers.each do |answer| %>
+    <div class="row">
+      <div class="col-12">
+        <p>
+          <%= answer.body %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
+<%= form_with(model: [@question, @answer], local: true) do |form| %>
+  <div class="row">
+    <div class="col-12">
+      <%= form.label :body, 'Your answer' %>
+      <div>
+        <%= form.text_area :body, cols: 83, rows: 10 %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <%= form.submit%>
+    </div>
+  </div>
+<% end %>
