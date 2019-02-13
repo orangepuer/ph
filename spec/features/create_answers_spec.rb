@@ -4,7 +4,7 @@ feature 'Create answer' do
   given(:user) { create (:user) }
   given(:question) { create(:question, user: user) }
 
-  scenario 'Authenticated user create answer' do
+  scenario 'Authenticated user create answer', js: true do
     sign_in user
     visit question_path(question)
 
@@ -17,13 +17,9 @@ feature 'Create answer' do
     end
   end
 
-  scenario 'Non-authenticated user create answer' do
+  scenario 'Non-authenticated user create answer', js: true do
     visit question_path(question)
 
-    fill_in 'Your answer', with: 'My answer'
-    click_on 'Create'
-
-    expect(current_path).to eq new_user_session_path
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to have_link 'Sign in to answer the question'
   end
 end

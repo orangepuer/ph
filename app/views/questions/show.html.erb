@@ -25,17 +25,9 @@
 </div>
 <hr>
 <div class="answers">
-  <% @question.answers.each do |answer| %>
-    <div class="row">
-      <div class="col-12">
-        <p>
-          <%= answer.body %>
-        </p>
-      </div>
-    </div>
-  <% end %>
+  <%= render 'answers' %>
 </div>
-<%= form_with(model: [@question, @answer], local: true) do |form| %>
+<%= form_with(model: [@question, @answer]) do |form| %>
   <div class="row">
     <div class="col-12">
       <%= form.label :body, 'Your answer' %>
@@ -46,7 +38,7 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <%= form.submit%>
+      <%= current_user ? form.submit : link_to('Sign in to answer the question', new_user_session_path) %>
     </div>
   </div>
 <% end %>
