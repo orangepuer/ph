@@ -3,7 +3,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @question.answers.create(answer_params)
+    @answer = @question.answers.create(answer_params)
   end
 
   private

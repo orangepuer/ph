@@ -17,6 +17,15 @@ feature 'Create answer' do
     end
   end
 
+  scenario 'User try to create invalid answer', js: true do
+    sign_in user
+    visit question_path(question)
+
+    click_on 'Create'
+
+    expect(page).to have_content "Body can't be blank"
+  end
+
   scenario 'Non-authenticated user create answer', js: true do
     visit question_path(question)
 
