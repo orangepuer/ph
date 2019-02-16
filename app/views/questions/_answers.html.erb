@@ -1,9 +1,21 @@
 <% @question.answers.each do |answer| %>
-  <div class="row">
-    <div class="col-12">
-      <p>
-        <%= answer.body %>
-      </p>
+  <% if answer.persisted? %>
+    <div class="row">
+      <div class="col-12">
+        <p>
+          <%= answer.body %>
+        </p>
+        <%= link_to 'Edit', '', class: 'edit_answer_link', data: { answer_id: answer.id } if user_signed_in? %>
+        <div>
+          <%= form_with(model: [@question, answer], html: { id: "edit_answer_#{ answer.id }", style: "display: none" } ) do |form| %>
+            <%= form.label :body, 'Answer' %>
+            <div>
+              <%= form.text_area :body %>
+            </div>
+            <%= form.submit 'Save' %>
+          <% end %>
+        </div>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
