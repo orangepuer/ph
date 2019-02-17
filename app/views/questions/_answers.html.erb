@@ -5,7 +5,7 @@
         <p>
           <%= answer.body %>
         </p>
-        <%= link_to 'Edit', '', class: 'edit_answer_link', data: { answer_id: answer.id } if user_signed_in? %>
+        <%= link_to 'Edit', '', class: 'edit_answer_link', data: { answer_id: answer.id } if current_user == answer.user %>
         <div>
           <%= form_with(model: [@question, answer], html: { id: "edit_answer_#{ answer.id }", style: "display: none" } ) do |form| %>
             <%= form.label :body, 'Answer' %>

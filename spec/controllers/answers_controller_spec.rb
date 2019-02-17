@@ -34,7 +34,8 @@ RSpec.describe AnswersController, type: :controller do
   describe 'PATCH #update' do
     sign_in_user
 
-    let(:answer) { create(:answer, question: question) }
+    let(:answer) { create(:answer, question: question, user: @user) }
+    let(:another_answer) { create(:answer, question: question) }
 
     it 'assigns the requested answer to @answer' do
       patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
@@ -52,7 +53,14 @@ RSpec.describe AnswersController, type: :controller do
       patch :update, params: { id: answer, question_id: question, answer: { body: 'edited_body' }, format: :js }
 
       answer.reload
-      expect(answer.body). to eq 'edited_body'
+      expect(answer.body).to eq 'edited_body'
+    end
+
+    it 'does not change answer attributes' do
+      patch :update, params: { id: another_answer, question_id: question, answer: { body: 'edited_body' }, format: :js }
+
+      answer.reload
+      expect(answer.body).to eq 'MyText'
     end
 
     it 'render update template' do

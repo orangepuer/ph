@@ -3,12 +3,16 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @answer = @question.answers.create(answer_params)
+    @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
+    @answer.save
   end
 
   def update
     @answer = Answer.find(params[:id])
-    @answer.update(answer_params)
+    if @answer.user == current_user
+      @answer.update(answer_params)
+    end
   end
 
   private
