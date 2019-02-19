@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-12">
+    <b>
+      <%= @question.title %>
+    </b>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-12">
+    <p>
+      <%= @question.body %>
+    </p>
+  </div>
+</div>
+<p class="question_errors">
+</p>
+<%= render 'form', hidden: true %>
+<div class="row">
+  <div class="col-12">
+    <%= link_to 'Edit', edit_question_path(@question), class: 'edit_question_link' if @question.user == current_user %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <%= link_to 'Delete', @question, method: :delete, data: { confirm: 'Are you sure?' } if @question.user == current_user %>
+  </div>
+</div>

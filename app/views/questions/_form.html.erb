@@ -1,4 +1,5 @@
-<%= form_with(model: @question, local: true) do |form| %>
+<% hidden = false unless local_assigns[:hidden] %>
+<%= form_with(model: @question, html: { style: "display: #{ hidden ? 'none' : 'block' }"}, class: 'edit_question' ) do |form| %>
   <div class="row">
     <div class="col-12">
       <%= form.label :title %>
