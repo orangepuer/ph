@@ -2,6 +2,7 @@ require 'rails_helper'
 
 feature 'Edit_question' do
   given(:user) { create(:user) }
+  given(:another_user) { create(:user) }
   given(:question) { create(:question, user: user) }
 
   scenario 'Authenticated user sees link to Cancel', js: true do
@@ -32,6 +33,16 @@ feature 'Edit_question' do
     expect(page).to have_content 'test body'
     within '.question' do
       expect(page).to_not have_selector 'textarea'
+    end
+  end
+
+  scenario 'Authenticated user try to edit question other users' do
+    sign_in another_user
+
+    visit question_path(question)
+
+    within '.question' do
+      expect(page).to_not have_link 'Edit'
     end
   end
 

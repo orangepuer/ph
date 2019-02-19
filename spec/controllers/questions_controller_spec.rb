@@ -86,6 +86,10 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
+
+    let(:question) { create(:question, user: @user ) }
+    let(:another_question) { create(:question) }
+
     context 'with valid attributes' do
       it 'assign the requested question to @question' do
         patch :update, params: { id: question, question: attributes_for(:question), format: :js }
@@ -99,8 +103,15 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.body).to eq 'new_body'
       end
 
+      it 'does not changes question attributes' do
+        patch :update, params: { id: another_question, question: { title: 'edited_title', body: 'edited_body' }, format: :js }
+        question.reload
+        expect(question.title).to eq 'MyString'
+        expect(question.body).to eq 'MyText'
+      end
+
       it 'render update view' do
-        patch :update, params: { id:question, question: attributes_for(:question), format: :js }
+        patch :update, params: { id: question, question: attributes_for(:question), format: :js }
         expect(response).to render_template :update
       end
     end
@@ -108,7 +119,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with invalid attributes' do
       before { patch :update, params: { id: question, question: { title: 'new_title', body: nil }, format: :js } }
 
-      it 'does not change question attributes' do
+      it 'does not changes question attributes' do
         question.reload
         expect(question.title).to eq 'MyString'
         expect(question.body).to eq 'MyText'
