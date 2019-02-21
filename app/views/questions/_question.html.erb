@@ -13,6 +13,17 @@
     </p>
   </div>
 </div>
+<div class="row">
+  <div class="col-12">
+    <ul>
+      <% @question.attachments.each do |attachment| %>
+        <li>
+          <%= link_to attachment.file.filename, attachment.file.url %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 <p class="question_errors">
 </p>
 <%= render 'form', hidden: true %>

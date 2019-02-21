@@ -1,8 +1,11 @@
 class Question < ApplicationRecord
   belongs_to :user
   has_many :answers
+  has_many :attachments, as: :attachmentable
 
   validates :title, :body, presence: true
+
+  accepts_nested_attributes_for :attachments
 
   def created_before
     @numbers_of_day = (Time.now - self.created_at).to_f/60/60/24
