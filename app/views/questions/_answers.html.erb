@@ -5,6 +5,13 @@
         <p>
           <%= answer.body %>
         </p>
+        <ul>
+          <% answer.attachments.each do |attachment| %>
+            <li>
+              <%= link_to attachment.file.filename, attachment.file.url %>
+            </li>
+          <% end %>
+        </ul>
         <%= link_to 'Edit', '', class: 'edit_answer_link', data: { answer_id: answer.id } if current_user == answer.user %>
         <div>
           <%= form_with(model: [@question, answer], html: { id: "edit_answer_#{ answer.id }", style: "display: none" } ) do |form| %>
