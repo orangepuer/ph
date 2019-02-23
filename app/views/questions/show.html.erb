@@ -14,12 +14,9 @@
       <div>
         <%= form.text_area :body, cols: 83, rows: 10 %>
       </div>
-      <%= form.fields_for :attachments do |attachment| %>
-        <%= attachment.label :file %>
-        <div>
-          <%= attachment.file_field :file %>
-        </div>
-      <% end %>
+      <div>
+        <%= link_to_add_association 'Add file', form, :attachments, partial: 'questions/attachment_fields' %>
+      </div>
     </div>
   </div>
   <div class="row">

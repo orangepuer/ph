@@ -19,6 +19,9 @@
             <div>
               <%= form.text_area :body %>
             </div>
+            <div>
+              <%= link_to_add_association 'Add file', form, :attachments, partial: 'questions/attachment_fields' %>
+            </div>
             <%= form.submit 'Save' %>
           <% end %>
         </div>

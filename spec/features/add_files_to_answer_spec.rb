@@ -9,6 +9,7 @@ feature 'Add files to answer' do
 
     visit question_path(question)
     fill_in 'Your answer', with: 'My answer'
+    click_on 'Add file'
     attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
     click_on 'Create'
 
