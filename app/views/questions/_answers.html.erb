@@ -1,31 +1,29 @@
 <% @question.answers.each do |answer| %>
   <% if answer.persisted? %>
-    <div class="row">
-      <div class="col-12">
-        <p>
-          <%= answer.body %>
-        </p>
-        <ul>
-          <% answer.attachments.each do |attachment| %>
-            <li>
-              <%= link_to attachment.file.filename, attachment.file.url %>
-            </li>
-          <% end %>
-        </ul>
-        <%= link_to 'Edit', '', class: 'edit_answer_link', data: { answer_id: answer.id } if current_user == answer.user %>
-        <div>
-          <%= form_with(model: [@question, answer], html: { id: "edit_answer_#{ answer.id }", style: "display: none" } ) do |form| %>
-            <%= form.label :body, 'Answer' %>
-            <div>
-              <%= form.text_area :body %>
-            </div>
-            <div>
-              <%= link_to_add_association 'Add file', form, :attachments, partial: 'questions/attachment_fields' %>
-            </div>
-            <%= form.submit 'Save' %>
-          <% end %>
+    <div>
+      <p>
+        <%= answer.body %>
+      </p>
+      <ul>
+        <% answer.attachments.each do |attachment| %>
+          <li>
+            <%= link_to attachment.file.filename, attachment.file.url %>
+          </li>
+        <% end %>
+      </ul>
+      <%= link_to 'Edit', '', class: 'edit_answer_link', data: { answer_id: answer.id } if current_user == answer.user %>
+      <%= form_with(model: [@question, answer], html: { id: "edit_answer_#{ answer.id }", style: "display: none" } ) do |form| %>
+        <%= form.label :body, 'Answer' %>
+        <div class="answer-errors">
         </div>
-      </div>
+        <div>
+          <%= form.text_area :body %>
+        </div>
+        <div>
+          <%= link_to_add_association 'Add file', form, :attachments, partial: 'questions/attachment_fields' %>
+        </div>
+        <%= form.submit 'Save' %>
+      <% end %>
     </div>
   <% end %>
 <% end %>

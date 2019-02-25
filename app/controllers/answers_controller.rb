@@ -6,6 +6,18 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
+
+    respond_to do |format|
+      if @answer.save
+        format.html { render partial: 'questions/answers', layout: false }
+        format.js
+        format.json { render json: @answer }
+      else
+        format.html { render plain: @answer.errors.full_messages.join("\n"), status: :unprocessable_entity }
+        format.js
+        format.json { render json: @answer.errors.full_messages, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
