@@ -31,4 +31,28 @@ feature 'Create answer' do
 
     expect(page).to have_link 'Sign in to answer the question'
   end
+
+  context 'Multiple sessions' do
+    scenario 'User sees in real time the answers created of other users', js: true do
+      Capybara.using_session('user') do
+        sign_in user
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'Your answer', with: 'Real time answer'
+        click_on 'Create'
+
+        expect(page).to have_content 'Real time answer'
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'Real time answer'
+      end
+    end
+  end
 end

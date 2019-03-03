@@ -1,0 +1,10 @@
+- answer = @data['answer']
+- attachments = @data['attachments']
+
+div
+  p
+    = answer.body
+  ul
+    - $.each attachments, (index, attachment) =>
+      li
+        a class='link' href="#{attachment['url']}" #{attachment['name']}
