@@ -1,0 +1,1 @@
+a href="/questions/#{@data['question'].id}" #{@data['question'].title}

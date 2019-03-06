@@ -25,6 +25,7 @@ class QuestionsController < ApplicationController
 
     if @question.save
       redirect_to @question, notice: 'Your question successfully created'
+      ActionCable.server.broadcast "/questions", question: @question
     else
       render :new
     end
