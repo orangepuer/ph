@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_question, only: [:create, :update]
+  before_action :set_question, only: :create
   before_action :authenticate_user!
 
   def create
@@ -19,6 +19,7 @@ class AnswersController < ApplicationController
 
   def update
     @answer = Answer.find(params[:id])
+    @question = @answer.question
     if @answer.user == current_user
       @answer.update(answer_params)
     end
