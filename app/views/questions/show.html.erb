@@ -1,5 +1,8 @@
 <div class="question">
   <%= render 'question' %>
+  <div class="comments">
+    <%= render 'comments/comments', parent: @question %>
+  </div>
 </div>
 <hr>
 <div class="answers">

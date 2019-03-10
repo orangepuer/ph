@@ -30,7 +30,7 @@ feature 'Edit answer' do
 
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'edited answer'
-        expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_selector 'textarea', id: 'answer_body'
       end
     end
   end

@@ -1,6 +1,6 @@
 <% @question.answers.each do |answer| %>
   <% if answer.persisted? %>
-    <div>
+    <div class="answer" id="answer-<%= answer.id %>">
       <p>
         <%= answer.body %>
       </p>
@@ -12,7 +12,7 @@
         <% end %>
       </ul>
       <%= link_to 'Edit', '', class: 'edit_answer_link', data: { answer_id: answer.id } if current_user == answer.user %>
-      <%= form_with(model: [@question, answer], html: { id: "edit_answer_#{ answer.id }", style: "display: none" } ) do |form| %>
+      <%= form_with(model: answer, html: { id: "edit_answer_#{ answer.id }", style: "display: none" } ) do |form| %>
         <%= form.label :body, 'Answer' %>
         <div class="answer-errors">
         </div>
@@ -24,6 +24,9 @@
         </div>
         <%= form.submit 'Save' %>
       <% end %>
+      <div class="comments">
+        <%= render 'comments/comments', parent: answer %>
+      </div>
     </div>
   <% end %>
 <% end %>

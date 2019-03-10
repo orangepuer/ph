@@ -1,0 +1,8 @@
+var parentSelector = '<%= @parent.is_a?(Question) ? ".question" : "#answer-#{@parent.id}" %>'
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |message| %>
+    $(parentSelector + ' .comment-errors').append('<%= j message %>')
+  <% end %>
+<% else %>
+  $(parentSelector + ' .comments').html('<%= j render 'comments', parent: @parent %>')
+<% end %>
