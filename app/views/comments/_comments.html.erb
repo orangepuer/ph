@@ -1,9 +1,11 @@
 <%= render parent.comments %>
-<%= form_with(model: [parent, parent.comments.new]) do |form| %>
-  <%= form.label :body, 'Comment' %>
-  <div class="comment-errors"></div>
-  <div>
-    <%= form.text_area :body %>
-  </div>
-  <%= form.submit 'Post' %>
+<% if signed_in? %>
+  <%= form_with(model: [parent, parent.comments.new]) do |form| %>
+    <%= form.label :body, 'Comment' %>
+    <div class="comment-errors"></div>
+    <div>
+      <%= form.text_area :body %>
+    </div>
+    <%= form.submit 'Post' %>
+  <% end %>
 <% end %>
