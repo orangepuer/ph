@@ -56,6 +56,8 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #edit' do
     sign_in_user
+
+    let(:question) { create(:question, user: @user) }
     before { get :edit, params: { id: question } }
 
     it 'assigns the request question to @question' do
@@ -141,6 +143,8 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
+
+    let(:question) { create(:question, user: @user) }
     before { question }
 
     it 'delete question' do
