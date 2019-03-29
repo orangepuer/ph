@@ -44,6 +44,8 @@ gem 'gon'
 gem 'skim'
 gem 'cancancan', '~> 2.0'
 gem 'doorkeeper'
+gem 'oj'
+gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
