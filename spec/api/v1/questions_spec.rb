@@ -144,4 +144,61 @@ describe 'Questions API', type: :request do
       end
     end
   end
+
+  describe 'GET #create' do
+    context 'unauthorized' do
+      it 'return 401 status if there is no access_token' do
+        post "/api/v1/questions/", params: { question: attributes_for(:question) }
+
+        expect(response.status).to eq 401
+      end
+
+      it 'return 401 status if access_token invalid' do
+        post "/api/v1/questions/", params: { access_token: '123456', question: attributes_for(:question) }
+
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      let(:access_token) { create(:access_token) }
+
+      context 'with valid attributes' do
+        it 'return 200 status' do
+          post "/api/v1/questions/", params: { access_token: access_token.token,
+                                               question: attributes_for(:question),
+                                               format: :json }
+
+          expect(response).to be_successful
+        end
+
+        it 'save the new question in the database' do
+          expect do
+            post "/api/v1/questions", params: { access_token: access_token.token,
+                                                question: attributes_for(:question),
+                                                format: :json }
+          end.to change(Question, :count).by(1)
+        end
+
+        it 'save the new question with correct attributes' do
+          post "/api/v1/questions/", params: { access_token: access_token.token,
+                                               question: { title: 'new_title', body: 'new_body' },
+                                               format: :json }
+
+          expect(Question.last.title).to eq 'new_title'
+          expect(Question.last.body).to eq 'new_body'
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not save the question' do
+          expect do
+            post "/api/v1/questions/", params: { access_token: access_token.token,
+                                                 question: attributes_for(:invalid_question),
+                                                 format: :json }
+          end.to_not change(Question, :count)
+        end
+      end
+    end
+  end
 end

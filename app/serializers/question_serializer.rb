@@ -6,6 +6,6 @@ class QuestionSerializer < ActiveModel::Serializer
   has_many :attachments
 
   def short_title
-    object.title.truncate(5)
+    object.title.truncate(5) if object.title
   end
 end
