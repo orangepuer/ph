@@ -9,18 +9,9 @@ describe 'Answers API', type: :request do
     let(:user) { create(:user) }
     let(:question) { create(:question, user: user) }
 
-    context 'unauthorized' do
-      it 'return 401 status if there is no access_token' do
-        get "/api/v1/questions/#{question.id}/answers", headers: headers
-
-        expect(response.status).to eq 401
-      end
-
-      it 'return 401 status if access_token invalid' do
-        get "/api/v1/questions/#{question.id}/answers", params: {access_token: '123456'}, headers: headers
-
-        expect(response.status).to eq 401
-      end
+    it_behaves_like 'API Authorizable' do
+      let(:method) { :get }
+      let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
     end
 
     context 'authorized' do
