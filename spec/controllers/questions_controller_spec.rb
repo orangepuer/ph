@@ -71,6 +71,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'POST #create' do
     sign_in_user
+
     context 'with valid attributes' do
       it 'save the new question in the database' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
@@ -79,6 +80,11 @@ RSpec.describe QuestionsController, type: :controller do
       it 'redirect to show view' do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to question_path(assigns(:question))
+      end
+
+      it 'should broadcast question' do
+        expect(ActionCable.server).to receive(:broadcast)
+        post :create, params: { question: attributes_for(:question) }
       end
     end
 
@@ -90,6 +96,11 @@ RSpec.describe QuestionsController, type: :controller do
       it 're-render new view' do
         post :create, params: { question: attributes_for(:invalid_question) }
         expect(response).to render_template :new
+      end
+
+      it 'does not should broadcast question' do
+        expect(ActionCable.server).to_not receive(:broadcast)
+        post :create, params: { question: attributes_for(:invalid_question) }
       end
     end
   end
