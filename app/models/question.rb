@@ -3,6 +3,7 @@ class Question < ApplicationRecord
   has_many :answers
   has_many :attachments, as: :attachmentable, dependent: :destroy
   has_many :comments, as: :commentable
+  has_many :subscriptions
 
   validates :title, :body, presence: true
 
