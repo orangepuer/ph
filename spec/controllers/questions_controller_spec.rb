@@ -167,4 +167,54 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to questions_path
     end
   end
+
+  describe 'POST #subscribe' do
+    sign_in_user
+
+    let(:question) { create(:question, user: @user) }
+
+    context 'if subscription does not exists' do
+      it 'assigns the requested question to @question' do
+        post :subscribe, params: { id: question }
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'assigns the requested subscription to be nil' do
+        post :subscribe, params: { id: question }
+        expect(assigns(:subscription)).to be_nil
+      end
+
+      it 'save the new subscription in the database' do
+        expect { post :subscribe, params: { id: question } }.to change(Subscription, :count).by(1)
+      end
+
+      it 'redirect to show view' do
+        post :subscribe, params: { id: question }
+        expect(response).to redirect_to question_path
+      end
+    end
+
+    context 'if subscription exists' do
+      let!(:subscription) { create(:subscription, user: @user, question: question) }
+
+      it 'assigns the requested question to @question' do
+        post :subscribe, params: { id: question }
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'assigns the requested subscription to @subscription' do
+        post :subscribe, params: { id: question }
+        expect(assigns(:subscription)).to eq subscription
+      end
+
+      it 'does not save the new subscription in the database' do
+        expect { post :subscribe, params: { id: question } }.to_not change(Subscription, :count)
+      end
+
+      it 'redirect to show view' do
+        post :subscribe, params: { id: question }
+        expect(response).to redirect_to question_path
+      end
+    end
+  end
 end

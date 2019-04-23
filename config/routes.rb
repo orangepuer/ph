@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :questions, concerns: :commentable, shallow: true do
     resources :answers, concerns: :commentable
+    post :subscribe, on: :member
   end
 
   namespace :api do

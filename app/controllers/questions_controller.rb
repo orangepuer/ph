@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_question, only: [:show, :edit, :update, :destroy, :subscribe]
   before_action :authenticate_user!, except: [:index, :show]
 
   authorize_resource
@@ -44,6 +44,11 @@ class QuestionsController < ApplicationController
     redirect_to questions_path, notice: 'You question successfully deleted'
   end
 
+  def subscribe
+    @question.subscriptions.create(user: current_user) unless find_subscription
+    redirect_to @question
+  end
+
   private
 
   def set_question
@@ -52,5 +57,9 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body, attachments_attributes: [:file])
+  end
+
+  def find_subscription
+    @subscription = current_user.subscriptions.find_by(question_id: @question)
   end
 end

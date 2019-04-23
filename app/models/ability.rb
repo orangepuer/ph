@@ -22,6 +22,8 @@ class Ability
     can :create, [Question, Answer, Comment]
     can :update, [Question, Answer, Comment], user: user
     can :destroy, [Question, Answer, Comment], user: user
+
+    can :subscribe, Question
   end
 
   def admin_abilities
