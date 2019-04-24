@@ -7,4 +7,8 @@ class User < ApplicationRecord
   has_many :questions
   has_many :answers
   has_many :subscriptions
+
+  def subscribed?(question)
+    self.subscriptions.exists?(question: question)
+  end
 end
