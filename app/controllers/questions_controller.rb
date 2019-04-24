@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy, :subscribe]
+  before_action :set_question, only: [:show, :edit, :update, :destroy, :subscribe, :unsubscribe]
   before_action :authenticate_user!, except: [:index, :show]
 
   authorize_resource
@@ -46,6 +46,11 @@ class QuestionsController < ApplicationController
 
   def subscribe
     @question.subscriptions.create(user: current_user) unless find_subscription
+    redirect_to @question
+  end
+
+  def unsubscribe
+    find_subscription.destroy if find_subscription
     redirect_to @question
   end
 

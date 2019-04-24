@@ -24,6 +24,7 @@ class Ability
     can :destroy, [Question, Answer, Comment], user: user
 
     can :subscribe, Question
+    can :unsubscribe, Question
   end
 
   def admin_abilities
