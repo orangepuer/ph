@@ -1,9 +1,24 @@
 <div class="row">
-  <div class="col-12">
+  <div class="col-4">
     <b>
       <%= @question.title %>
     </b>
   </div>
+  <% if signed_in? %>
+    <div class="col-8">
+      <ul class="nav justify-content-end">
+        <li class="nav-item">
+          <% if current_user.subscribed?(@question) %>
+            <%= link_to 'Unsubscribe', unsubscribe_question_path, method: :delete,
+                        data: { confirm: 'Do you want to unsubscribe?' }, class: "nav-link active btn btn-primary" %>
+          <% else %>
+            <%= link_to 'Subscribe', subscribe_question_path, method: :post,
+                        data: { confirm: 'Do you want to subscribe?' }, class: "nav-link active btn btn-primary" %>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  <% end %>
 </div>
 <hr>
 <div class="row">
