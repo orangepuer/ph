@@ -16,6 +16,8 @@ module Pdh
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    config.autoload_paths += [config.root.join('app')]
+
     config.active_job.queue_adapter = :sidekiq
 
     config.generators do |g|

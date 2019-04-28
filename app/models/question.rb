@@ -9,6 +9,8 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
+  after_commit :calculate_reputation, :on => :create
+
   def created_before
     @numbers_of_day = (Time.now - self.created_at).to_f/60/60/24
     if @numbers_of_day >= 1
@@ -16,5 +18,11 @@ class Question < ApplicationRecord
     else
       "опубликовано менее #{ ((@numbers_of_day - @numbers_of_day.to_i) * 24).to_i + 1 } часов назад"
     end
+  end
+
+  private
+
+  def calculate_reputation
+    ReputationJob.perform_later(self)
   end
 end

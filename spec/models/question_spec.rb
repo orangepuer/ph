@@ -11,4 +11,13 @@ RSpec.describe Question, type: :model do
   it { should validate_presence_of :body }
 
   it { should accept_nested_attributes_for :attachments }
+
+  describe 'reputation' do
+    let(:question) { build(:question) }
+    
+    it 'calls ReputationJob after create' do
+      expect(ReputationJob).to receive(:perform_later).with(question)
+      question.save
+    end
+  end
 end
