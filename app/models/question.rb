@@ -11,6 +11,8 @@ class Question < ApplicationRecord
 
   after_commit :calculate_reputation, :on => :create
 
+  scope :created_recently, -> { where('created_at >= ?', 1.day.ago) }
+
   def created_before
     @numbers_of_day = (Time.now - self.created_at).to_f/60/60/24
     if @numbers_of_day >= 1

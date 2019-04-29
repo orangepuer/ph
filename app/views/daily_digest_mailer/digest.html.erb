@@ -1,0 +1,13 @@
+<h2>
+  hello <%= @user.email %>
+</h2>
+<p>
+  Предлагаем вам ознакомиться с вопросами, опубликованными за последние сутки:
+</p>
+<ul>
+  <% @questions.each do |question| %>
+    <li>
+      <%= link_to question.title, question %>
+    </li>
+  <% end %>
+</ul>
