@@ -1,0 +1,8 @@
+<h2>Привет <%= @user.email %></h2>
+<p>
+  К вопросу <%= link_to @answer.question.title, @answer.question %>,
+  на который вы подписаны, был добавлен ответ:
+</p>
+<p>
+  <%= @answer.body %>
+</p>

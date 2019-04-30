@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :answer do
     body { "MyText" }
-    question { "" }
+    question
     user
   end
 

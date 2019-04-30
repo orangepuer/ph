@@ -8,6 +8,8 @@ class Answer < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
+  after_commit :notify_subscribers, :on => :create
+
   def get_attachments
     attachments_data = []
 
@@ -16,5 +18,11 @@ class Answer < ApplicationRecord
     end
 
     attachments_data
+  end
+
+  private
+
+  def notify_subscribers
+    SubscriberNotificationJob.perform_later(self)
   end
 end
