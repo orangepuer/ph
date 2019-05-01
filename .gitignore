@@ -30,3 +30,5 @@ config/database.yml
 .idea
 public/uploads
 dump.rdb
+config/*.sphinx.conf
+db/sphinx
