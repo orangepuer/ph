@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     delete :unsubscribe, on: :member
   end
 
+  resource :search, only: :show
+
   namespace :api do
     namespace :v1 do
       resources :profiles do
