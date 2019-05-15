@@ -1,0 +1,7 @@
+<li>
+  <% if resource.commentable.is_a?(Question) %>
+    <%= link_to resource.body, resource.commentable %>
+  <% else %>
+    <%= link_to resource.body, resource.commentable.question %>
+  <% end %>
+</li>

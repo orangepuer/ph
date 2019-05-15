@@ -1,0 +1,29 @@
+<h2>
+  Страница поиска
+</h2>
+<%= form_with(url: search_path, local: true, method: 'get') do |form| %>
+  <div class="row">
+    <div class="col-4">
+      <%= label_tag :search_type, 'Search by' %>
+      <%= select_tag :search_type, options_for_select(Services::Search::SEARCH_TYPES, params[:search_type]), class: 'form-control' %>
+    </div>
+    <div class="col-6">
+      <%= label_tag :search_query, 'Search query' %>
+      <%= text_field_tag :search_query, nil, placeholder: 'search', class: 'form-control' %>
+    </div>
+    <div class="col-2">
+      <%= submit_tag 'Найти', class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>
+<% if @search_result %>
+  <div class="row">
+    <div class="col-12">
+      <ul>
+        <% @search_result.each do |object| %>
+            <%= render "searches/#{object.class.to_s.underscore}", resource: object %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
